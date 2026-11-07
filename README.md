@@ -108,3 +108,24 @@ npm run build
 - **Account & Orders Dashboard:** View verified member status, order history, placed packages, and live tracking status.
 - **Sign Out / Logout:** Secure sign-out with instant state cleanup and safe redirection.
 
+### 7. About Page
+- Brand narrative, heritage, craft philosophy, and core principles (*Timeless Simplicity*, *Ethical & Sustainable*, *Uncompromising Quality*, *Human-First Support*).
+- Impact metrics (50k+ orders delivered worldwide, 4.9/5 rating).
+
+### 8. Contact Page
+- Customer service inquiry form with topic/subject selector and order number linking.
+- Direct helpline cards (Toll-Free Phone: `1-800-555-0199`, Email: `support@aurastore.com`, Hours, Fulfillment Center address).
+- Interactive FAQ accordion for instant answers.
+
+### 9. Additional Interactive Features
+- **Wishlist Drawer:** 1-click heart icon on all cards with dedicated side drawer to manage saved items.
+- **Live Search Autocomplete:** Instant drop-down search matches as you type in the header.
+- **Customer Reviews:** Interactive review submission modal on the product details page.
+- **Quick View Modal:** Preview any product without leaving the catalog.
+
+### 10. Authentication & Checkout Protection Gate
+- **Register & Login System:** User registration with name, email, password, and quick 1-click demo login accounts (*Alex Morgan*, *Sarah Jenkins*).
+- **Checkout Login Gate:** If a customer is logged in, they proceed directly to Checkout with their details pre-populated. If not logged in, they are prompted to sign in or create an account, after which they are seamlessly forwarded straight into the checkout flow.
+- **Account & Orders Dashboard:** View verified member status, order history, placed packages, and live tracking status.
+- **Sign Out / Logout:** Secure sign-out with instant state cleanup and safe redirection.
+

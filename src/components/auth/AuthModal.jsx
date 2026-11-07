@@ -115,7 +115,7 @@ export default function AuthModal() {
                 : 'text-slate-500 hover:text-slate-800'
             }`}
           >
-            New Customer? Register
+            Register
           </button>
         </div>
 
