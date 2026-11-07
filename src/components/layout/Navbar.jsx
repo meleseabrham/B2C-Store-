@@ -62,7 +62,7 @@ export default function Navbar() {
             </span>
             <span className="text-brand-300">|</span>
             <button 
-              onClick={() => navigateTo('shop')} 
+              onClick={() => navigateTo('track-order')} 
               className="hover:text-white transition-colors underline underline-offset-2"
             >
               Track Order
@@ -117,57 +117,18 @@ export default function Navbar() {
                 )}
               </button>
 
-              {/* Categories Dropdown */}
-              <div 
-                className="relative"
-                onMouseEnter={() => setCategoriesDropdownOpen(true)}
-                onMouseLeave={() => setCategoriesDropdownOpen(false)}
+              {/* Categories Link - Opens dedicated categories page (No popup) */}
+              <button 
+                onClick={() => navigateTo('categories')}
+                className={`py-1 transition-colors relative hover:text-white/80 ${
+                  currentPage === 'categories' ? 'text-white font-semibold' : 'text-white/90'
+                }`}
               >
-                <button 
-                  onClick={() => navigateTo('shop')}
-                  className="flex items-center gap-1 py-1 text-white/90 hover:text-white focus:outline-none"
-                >
-                  Categories
-                  <ChevronDown className="w-3.5 h-3.5 opacity-80" />
-                </button>
-
-                {categoriesDropdownOpen && (
-                  <div className="absolute top-full left-0 w-64 bg-white text-slate-800 rounded-xl shadow-2xl py-3 border border-slate-100 animate-fadeIn z-50">
-                    <div className="px-4 py-1 text-xs font-semibold text-slate-400 uppercase tracking-wider">
-                      Featured Collections
-                    </div>
-                    {CATEGORIES.map((cat) => (
-                      <button
-                        key={cat.id}
-                        onClick={() => {
-                          navigateTo('shop', { category: cat.id });
-                          setCategoriesDropdownOpen(false);
-                        }}
-                        className="w-full text-left px-4 py-2.5 text-sm hover:bg-slate-50 flex items-center justify-between group transition-colors"
-                      >
-                        <div>
-                          <span className="font-medium text-slate-800 group-hover:text-brand-600">
-                            {cat.name}
-                          </span>
-                          <span className="block text-xs text-slate-400">{cat.itemCount}</span>
-                        </div>
-                        <ArrowRight className="w-3.5 h-3.5 text-slate-300 group-hover:text-brand-600 transition-transform group-hover:translate-x-1" />
-                      </button>
-                    ))}
-                    <div className="border-t border-slate-100 mt-2 pt-2 px-4">
-                      <button
-                        onClick={() => {
-                          navigateTo('shop', { category: 'all' });
-                          setCategoriesDropdownOpen(false);
-                        }}
-                        className="text-xs font-semibold text-brand-600 hover:text-brand-800 flex items-center gap-1"
-                      >
-                        View all products &rarr;
-                      </button>
-                    </div>
-                  </div>
+                Categories
+                {currentPage === 'categories' && (
+                  <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-white rounded-full"></span>
                 )}
-              </div>
+              </button>
 
               {/* About Link */}
               <button 
@@ -286,9 +247,9 @@ export default function Navbar() {
               <Search className="w-5 h-5" />
             </button>
 
-            {/* Wishlist Button */}
+            {/* Wishlist Button - Navigates directly to dedicated Wishlist Page */}
             <button
-              onClick={() => setIsWishlistOpen(true)}
+              onClick={() => navigateTo('wishlist')}
               className="relative p-2 text-white/90 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
               title="Saved Wishlist"
               aria-label="Wishlist"
@@ -337,7 +298,7 @@ export default function Navbar() {
 
                     <button
                       onClick={() => {
-                        setIsWishlistOpen(true);
+                        navigateTo('wishlist');
                         setUserDropdownOpen(false);
                       }}
                       className="w-full text-left px-4 py-2 text-xs text-slate-700 hover:bg-slate-50 flex items-center gap-2 font-medium"
@@ -363,7 +324,7 @@ export default function Navbar() {
               </div>
             ) : (
               <button
-                onClick={() => openAuthModal('login')}
+                onClick={() => navigateTo('login')}
                 className="flex items-center gap-1.5 bg-white/10 hover:bg-white/20 active:bg-white/30 px-3 py-1.5 rounded-lg text-white font-medium text-xs transition-colors"
                 title="Account Login"
               >
@@ -444,6 +405,55 @@ export default function Navbar() {
               }`}
             >
               Shop All Products
+            </button>
+            <button
+              onClick={() => {
+                navigateTo('categories');
+                setMobileMenuOpen(false);
+              }}
+              className={`text-left text-base font-semibold py-2 px-3 rounded-lg ${
+                currentPage === 'categories' ? 'bg-white/20 text-white' : 'text-slate-200'
+              }`}
+            >
+              Categories
+            </button>
+            <button
+              onClick={() => {
+                navigateTo('wishlist');
+                setMobileMenuOpen(false);
+              }}
+              className={`text-left text-base font-semibold py-2 px-3 rounded-lg flex items-center justify-between ${
+                currentPage === 'wishlist' ? 'bg-white/20 text-white' : 'text-slate-200'
+              }`}
+            >
+              <span>Saved Wishlist</span>
+              {wishlist.length > 0 && (
+                <span className="bg-rose-500 text-white text-[11px] font-bold px-2 py-0.5 rounded-full">
+                  {wishlist.length}
+                </span>
+              )}
+            </button>
+            <button
+              onClick={() => {
+                navigateTo('track-order');
+                setMobileMenuOpen(false);
+              }}
+              className={`text-left text-base font-semibold py-2 px-3 rounded-lg ${
+                currentPage === 'track-order' ? 'bg-white/20 text-white' : 'text-slate-200'
+              }`}
+            >
+              Track Order
+            </button>
+            <button
+              onClick={() => {
+                navigateTo(user ? 'account' : 'login');
+                setMobileMenuOpen(false);
+              }}
+              className={`text-left text-base font-semibold py-2 px-3 rounded-lg ${
+                currentPage === 'login' || currentPage === 'account' ? 'bg-white/20 text-white' : 'text-slate-200'
+              }`}
+            >
+              {user ? `My Account (${user.name})` : 'Sign In / Register'}
             </button>
             <button
               onClick={() => {

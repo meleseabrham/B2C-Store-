@@ -40,7 +40,7 @@ export default function CartPage() {
     if (user) {
       navigateTo('checkout');
     } else {
-      openAuthModal('login', 'checkout');
+      navigateTo('login', { redirect: 'checkout' });
     }
   };
 

@@ -177,6 +177,12 @@ export const ShopProvider = ({ children }) => {
     if (data.search !== undefined) {
       setSearchQuery(data.search);
     }
+    if (data.redirect !== undefined) {
+      setAuthRedirectTarget(data.redirect);
+    }
+    if (data.mode !== undefined) {
+      setAuthMode(data.mode);
+    }
     setCurrentPage(page);
   };
 

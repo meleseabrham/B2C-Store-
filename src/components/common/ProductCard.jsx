@@ -20,7 +20,7 @@ export default function ProductCard({ product }) {
 
   const handleQuickView = (e) => {
     e.stopPropagation();
-    setQuickViewProduct(product);
+    navigateTo('product-details', { productId: product.id });
   };
 
   return (

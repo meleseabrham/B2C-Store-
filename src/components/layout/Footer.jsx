@@ -143,7 +143,7 @@ export default function Footer() {
                 </button>
               </li>
               <li>
-                <button onClick={() => navigateTo('shop')} className="hover:text-white transition-colors">
+                <button onClick={() => navigateTo('track-order')} className="hover:text-white transition-colors">
                   Order Tracking
                 </button>
               </li>

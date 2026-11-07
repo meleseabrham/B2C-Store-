@@ -173,7 +173,7 @@ export default function CheckoutPage() {
                   </div>
                   <button
                     type="button"
-                    onClick={() => openAuthModal('login', 'checkout')}
+                    onClick={() => navigateTo('login', { redirect: 'checkout' })}
                     className="font-bold text-[#537993] hover:underline"
                   >
                     Sign In / Register &rarr;
