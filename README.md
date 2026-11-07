@@ -87,3 +87,18 @@ npm run build
 - Receipt breakdown: purchased items, price paid, shipping destination, and payment method.
 - Print Order Receipt button and Continue Shopping button.
 
+### 7. About Page
+- Brand narrative, heritage, craft philosophy, and core principles (*Timeless Simplicity*, *Ethical & Sustainable*, *Uncompromising Quality*, *Human-First Support*).
+- Impact metrics (50k+ orders delivered worldwide, 4.9/5 rating).
+
+### 8. Contact Page
+- Customer service inquiry form with topic/subject selector and order number linking.
+- Direct helpline cards (Toll-Free Phone: `1-800-555-0199`, Email: `support@aurastore.com`, Hours, Fulfillment Center address).
+- Interactive FAQ accordion for instant answers.
+
+### 9. Additional Interactive Features
+- **Wishlist Drawer:** 1-click heart icon on all cards with dedicated side drawer to manage saved items.
+- **Live Search Autocomplete:** Instant drop-down search matches as you type in the header.
+- **Customer Reviews:** Interactive review submission modal on the product details page.
+- **Quick View Modal:** Preview any product without leaving the catalog.
+
