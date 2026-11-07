@@ -29,10 +29,20 @@ export default function CartPage() {
     applyPromoCode,
     removePromoCode,
     appliedPromoName,
-    promoError
+    promoError,
+    user,
+    openAuthModal
   } = useShop();
 
   const [couponInput, setCouponInput] = useState('');
+
+  const handleCheckoutClick = () => {
+    if (user) {
+      navigateTo('checkout');
+    } else {
+      openAuthModal('login', 'checkout');
+    }
+  };
 
   const handleApplyCoupon = (e) => {
     e.preventDefault();
@@ -325,10 +335,10 @@ export default function CartPage() {
 
               {/* Proceed to Checkout CTA */}
               <button
-                onClick={() => navigateTo('checkout')}
+                onClick={handleCheckoutClick}
                 className="w-full py-4 rounded-xl bg-[#537993] hover:bg-[#43647b] active:bg-[#344f62] text-white font-bold text-sm transition-all shadow-md flex items-center justify-center gap-2 group"
               >
-                <span>Proceed to Checkout</span>
+                <span>{user ? 'Proceed to Checkout' : 'Sign In & Proceed to Checkout'}</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </button>
 

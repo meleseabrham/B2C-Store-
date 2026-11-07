@@ -10,8 +10,10 @@ import CheckoutPage from './components/checkout/CheckoutPage';
 import OrderConfirmationPage from './components/checkout/OrderConfirmationPage';
 import AboutPage from './components/about/AboutPage';
 import ContactPage from './components/contact/ContactPage';
+import AccountPage from './components/account/AccountPage';
 import QuickViewModal from './components/common/QuickViewModal';
 import WishlistModal from './components/common/WishlistModal';
+import AuthModal from './components/auth/AuthModal';
 import ToastNotification from './components/common/ToastNotification';
 
 export default function App() {
@@ -36,6 +38,8 @@ export default function App() {
         return <AboutPage />;
       case 'contact':
         return <ContactPage />;
+      case 'account':
+        return <AccountPage />;
       default:
         return <HomePage />;
     }
@@ -59,6 +63,9 @@ export default function App() {
 
       {/* Wishlist Drawer Modal */}
       <WishlistModal />
+
+      {/* Authentication Login / Register Modal */}
+      <AuthModal />
 
       {/* Global Toast Notification */}
       <ToastNotification />

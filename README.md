@@ -102,3 +102,9 @@ npm run build
 - **Customer Reviews:** Interactive review submission modal on the product details page.
 - **Quick View Modal:** Preview any product without leaving the catalog.
 
+### 10. Authentication & Checkout Protection Gate
+- **Register & Login System:** User registration with name, email, password, and quick 1-click demo login accounts (*Alex Morgan*, *Sarah Jenkins*).
+- **Checkout Login Gate:** If a customer is logged in, they proceed directly to Checkout with their details pre-populated. If not logged in, they are prompted to sign in or create an account, after which they are seamlessly forwarded straight into the checkout flow.
+- **Account & Orders Dashboard:** View verified member status, order history, placed packages, and live tracking status.
+- **Sign Out / Logout:** Secure sign-out with instant state cleanup and safe redirection.
+

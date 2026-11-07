@@ -23,14 +23,23 @@ export default function CheckoutPage() {
     navigateTo,
     clearCart,
     setLastOrder,
-    showToast
+    showToast,
+    user,
+    logout,
+    openAuthModal,
+    addOrderToHistory
   } = useShop();
+
+  // Split user name if available
+  const initialFirstName = user ? user.name.split(' ')[0] : 'Alex';
+  const initialLastName = user ? user.name.split(' ').slice(1).join(' ') || 'Morgan' : 'Morgan';
+  const initialEmail = user ? user.email : 'alex.morgan@example.com';
 
   // Form states
   const [formData, setFormData] = useState({
-    firstName: 'Alex',
-    lastName: 'Morgan',
-    email: 'alex.morgan@example.com',
+    firstName: initialFirstName,
+    lastName: initialLastName,
+    email: initialEmail,
     phone: '+1 (555) 392-8812',
     address: '742 Evergreen Terrace',
     apartment: 'Apt 4B',
@@ -87,6 +96,7 @@ export default function CheckoutPage() {
       };
 
       setLastOrder(orderRecord);
+      addOrderToHistory(orderRecord);
       clearCart();
       setIsSubmitting(false);
       navigateTo('order-confirmation');
@@ -137,6 +147,40 @@ export default function CheckoutPage() {
             {/* Left 7 Columns: Customer Info, Shipping Address, Payment Method */}
             <div className="lg:col-span-7 space-y-6">
               
+              {/* Authentication Status Banner */}
+              {user ? (
+                <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-4 flex items-center justify-between text-xs">
+                  <div className="flex items-center gap-3">
+                    <img src={user.avatar} alt="" className="w-8 h-8 rounded-full object-cover border border-emerald-300" />
+                    <div>
+                      <span className="font-bold text-slate-800">Logged in as {user.name}</span>
+                      <span className="block text-[11px] text-slate-500">{user.email}</span>
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={logout}
+                    className="text-xs text-rose-600 hover:underline font-semibold"
+                  >
+                    Log Out
+                  </button>
+                </div>
+              ) : (
+                <div className="bg-amber-50 border border-amber-200 rounded-2xl p-4 flex items-center justify-between text-xs">
+                  <div className="flex items-center gap-2 text-amber-900">
+                    <Lock className="w-4 h-4 text-amber-700" />
+                    <span>Already have an account? Sign in for saved addresses & 1-click order.</span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => openAuthModal('login', 'checkout')}
+                    className="font-bold text-[#537993] hover:underline"
+                  >
+                    Sign In / Register &rarr;
+                  </button>
+                </div>
+              )}
+
               {/* 1. Customer Information Form (Wireframe Section) */}
               <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/80 shadow-xs">
                 <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">

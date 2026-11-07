@@ -21,7 +21,9 @@ export default function ProductDetailPage() {
     selectedProduct, 
     addToCart, 
     navigateTo, 
-    showToast 
+    showToast,
+    user,
+    openAuthModal
   } = useShop();
 
   const product = selectedProduct;
@@ -102,7 +104,11 @@ export default function ProductDetailPage() {
 
   const handleBuyNow = () => {
     addToCart(product, quantity, selectedColor, selectedSize);
-    navigateTo('checkout');
+    if (user) {
+      navigateTo('checkout');
+    } else {
+      openAuthModal('login', 'checkout');
+    }
   };
 
   const handleShare = () => {

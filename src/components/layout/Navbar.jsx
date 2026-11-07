@@ -8,7 +8,10 @@ import {
   Heart,
   Truck,
   Sparkles,
-  ArrowRight
+  ArrowRight,
+  User,
+  Package,
+  LogOut
 } from 'lucide-react';
 import { useShop } from '../../context/ShopContext';
 import { CATEGORIES, PRODUCTS } from '../../data/products';
@@ -22,12 +25,15 @@ export default function Navbar() {
     setSearchQuery,
     selectedCategory,
     wishlist,
-    setIsWishlistOpen
+    setIsWishlistOpen,
+    user,
+    logout,
+    openAuthModal
   } = useShop();
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [categoriesDropdownOpen, setCategoriesDropdownOpen] = useState(false);
-  const [aboutDropdownOpen, setAboutDropdownOpen] = useState(false);
+  const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [localSearch, setLocalSearch] = useState('');
 
@@ -294,6 +300,77 @@ export default function Navbar() {
                 </span>
               )}
             </button>
+
+            {/* User Account / Sign In Dropdown */}
+            {user ? (
+              <div 
+                className="relative"
+                onMouseEnter={() => setUserDropdownOpen(true)}
+                onMouseLeave={() => setUserDropdownOpen(false)}
+              >
+                <button
+                  onClick={() => navigateTo('account')}
+                  className="flex items-center gap-2 bg-white/10 hover:bg-white/20 px-2.5 py-1.5 rounded-lg text-white transition-colors"
+                >
+                  <img src={user.avatar} alt="" className="w-5 h-5 rounded-full object-cover border border-white/40" />
+                  <span className="hidden sm:inline text-xs font-semibold">{user.name.split(' ')[0]}</span>
+                  <ChevronDown className="w-3 h-3 text-white/70 hidden sm:inline" />
+                </button>
+
+                {userDropdownOpen && (
+                  <div className="absolute right-0 top-full mt-1 w-56 bg-white text-slate-800 rounded-2xl shadow-2xl py-2 border border-slate-100 z-50 animate-fadeIn">
+                    <div className="px-4 py-2 border-b border-slate-100">
+                      <p className="text-xs font-bold text-slate-900 truncate">{user.name}</p>
+                      <p className="text-[11px] text-slate-400 truncate">{user.email}</p>
+                    </div>
+
+                    <button
+                      onClick={() => {
+                        navigateTo('account');
+                        setUserDropdownOpen(false);
+                      }}
+                      className="w-full text-left px-4 py-2 text-xs text-slate-700 hover:bg-slate-50 flex items-center gap-2 font-medium"
+                    >
+                      <Package className="w-3.5 h-3.5 text-[#537993]" />
+                      <span>My Orders & Account</span>
+                    </button>
+
+                    <button
+                      onClick={() => {
+                        setIsWishlistOpen(true);
+                        setUserDropdownOpen(false);
+                      }}
+                      className="w-full text-left px-4 py-2 text-xs text-slate-700 hover:bg-slate-50 flex items-center gap-2 font-medium"
+                    >
+                      <Heart className="w-3.5 h-3.5 text-rose-500" />
+                      <span>Saved Wishlist ({wishlist.length})</span>
+                    </button>
+
+                    <div className="border-t border-slate-100 mt-1 pt-1">
+                      <button
+                        onClick={() => {
+                          logout();
+                          setUserDropdownOpen(false);
+                        }}
+                        className="w-full text-left px-4 py-2 text-xs text-rose-600 hover:bg-rose-50 flex items-center gap-2 font-semibold"
+                      >
+                        <LogOut className="w-3.5 h-3.5" />
+                        <span>Sign Out</span>
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <button
+                onClick={() => openAuthModal('login')}
+                className="flex items-center gap-1.5 bg-white/10 hover:bg-white/20 active:bg-white/30 px-3 py-1.5 rounded-lg text-white font-medium text-xs transition-colors"
+                title="Account Login"
+              >
+                <User className="w-3.5 h-3.5" />
+                <span className="hidden sm:inline">Sign In</span>
+              </button>
+            )}
 
             {/* Shopping Cart Button */}
             <button

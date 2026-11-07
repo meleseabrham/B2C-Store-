@@ -14,6 +14,29 @@ export const ShopProvider = ({ children }) => {
   const [wishlist, setWishlist] = useState(['prod-1', 'prod-3']);
   const [isWishlistOpen, setIsWishlistOpen] = useState(false);
 
+  // Authentication State
+  const [user, setUser] = useState(() => {
+    try {
+      const saved = localStorage.getItem('b2c_user');
+      return saved ? JSON.parse(saved) : null;
+    } catch {
+      return null;
+    }
+  });
+  const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [authMode, setAuthMode] = useState('login'); // 'login' or 'register'
+  const [authRedirectTarget, setAuthRedirectTarget] = useState(null);
+
+  // User Order History
+  const [userOrders, setUserOrders] = useState(() => {
+    try {
+      const saved = localStorage.getItem('b2c_orders');
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      return [];
+    }
+  });
+
   // Shopping Cart state
   const [cart, setCart] = useState(() => {
     // Initial sample items to make the store feel alive immediately
@@ -54,6 +77,87 @@ export const ShopProvider = ({ children }) => {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [currentPage, selectedProductId]);
+
+  const openAuthModal = (mode = 'login', redirectTarget = null) => {
+    setAuthMode(mode);
+    setAuthRedirectTarget(redirectTarget);
+    setAuthModalOpen(true);
+  };
+
+  const closeAuthModal = () => {
+    setAuthModalOpen(false);
+  };
+
+  const login = (email, password) => {
+    // Generate clean user profile
+    const namePart = email.split('@')[0];
+    const formattedName = namePart.charAt(0).toUpperCase() + namePart.slice(1);
+    const newUser = {
+      id: `usr-${Date.now()}`,
+      name: formattedName.includes('.') ? formattedName.split('.').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(' ') : formattedName,
+      email: email.trim().toLowerCase(),
+      avatar: `https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80`,
+      joinedDate: 'Joined Nov 2026'
+    };
+
+    setUser(newUser);
+    try {
+      localStorage.setItem('b2c_user', JSON.stringify(newUser));
+    } catch {}
+
+    showToast(`Welcome back, ${newUser.name}!`);
+    setAuthModalOpen(false);
+
+    // If customer was trying to checkout, seamlessly continue straight into checkout!
+    if (authRedirectTarget) {
+      setCurrentPage(authRedirectTarget);
+      setAuthRedirectTarget(null);
+    }
+  };
+
+  const register = (name, email, password) => {
+    const newUser = {
+      id: `usr-${Date.now()}`,
+      name: name.trim(),
+      email: email.trim().toLowerCase(),
+      avatar: `https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80`,
+      joinedDate: 'Joined Nov 2026'
+    };
+
+    setUser(newUser);
+    try {
+      localStorage.setItem('b2c_user', JSON.stringify(newUser));
+    } catch {}
+
+    showToast(`Account created successfully! Welcome, ${newUser.name}.`);
+    setAuthModalOpen(false);
+
+    if (authRedirectTarget) {
+      setCurrentPage(authRedirectTarget);
+      setAuthRedirectTarget(null);
+    }
+  };
+
+  const logout = () => {
+    setUser(null);
+    try {
+      localStorage.removeItem('b2c_user');
+    } catch {}
+    showToast('You have been signed out safely.', 'info');
+    if (currentPage === 'checkout' || currentPage === 'orders') {
+      setCurrentPage('home');
+    }
+  };
+
+  const addOrderToHistory = (order) => {
+    setUserOrders((prev) => {
+      const updated = [order, ...prev];
+      try {
+        localStorage.setItem('b2c_orders', JSON.stringify(updated));
+      } catch {}
+      return updated;
+    });
+  };
 
   const showToast = (message, type = 'success') => {
     const id = Date.now();
@@ -186,6 +290,17 @@ export const ShopProvider = ({ children }) => {
   return (
     <ShopContext.Provider
       value={{
+        user,
+        authModalOpen,
+        authMode,
+        setAuthMode,
+        openAuthModal,
+        closeAuthModal,
+        login,
+        register,
+        logout,
+        userOrders,
+        addOrderToHistory,
         wishlist,
         toggleWishlist,
         isWishlisted,
