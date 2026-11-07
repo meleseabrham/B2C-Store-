@@ -19,10 +19,10 @@ export default function HeroSection() {
 
       <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28 lg:py-36 text-center">
         {/* Top badge */}
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/15 backdrop-blur-md border border-white/20 text-xs sm:text-sm font-medium mb-8 text-brand-100 animate-fadeIn">
+        {/* <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/15 backdrop-blur-md border border-white/20 text-xs sm:text-sm font-medium mb-8 text-brand-100 animate-fadeIn">
           <Sparkles className="w-4 h-4 text-amber-300" />
           <span>New Season Drops & Curated Essentials</span>
-        </div>
+        </div> */}
 
         {/* Main Headline - Exactly matching screenshot 5 */}
         <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white mb-6 leading-[1.15] drop-shadow-md">
