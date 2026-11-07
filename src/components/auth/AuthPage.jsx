@@ -112,7 +112,7 @@ export default function AuthPage() {
                   : 'text-slate-500 hover:text-slate-800'
               }`}
             >
-              New Customer? Register
+              Register
             </button>
           </div>
 
@@ -122,9 +122,9 @@ export default function AuthPage() {
               
               {authMode === 'register' && (
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">
+                  {/* <label className="block text-xs font-semibold text-slate-700 mb-1">
                     Full Name *
-                  </label>
+                  </label> */}
                   <div className="relative">
                     <UserIcon className="w-4 h-4 text-slate-400 absolute left-3 top-3.5" />
                     <input
@@ -132,7 +132,7 @@ export default function AuthPage() {
                       required
                       value={name}
                       onChange={(e) => setName(e.target.value)}
-                      placeholder="Alex Morgan"
+                      placeholder="Enter your Full name"
                       className="w-full pl-9 pr-3 py-2.5 text-xs sm:text-sm bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#537993]/20"
                     />
                   </div>
@@ -140,9 +140,9 @@ export default function AuthPage() {
               )}
 
               <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1">
+                {/* <label className="block text-xs font-semibold text-slate-700 mb-1">
                   Email Address *
-                </label>
+                </label> */}
                 <div className="relative">
                   <Mail className="w-4 h-4 text-slate-400 absolute left-3 top-3.5" />
                   <input
@@ -150,27 +150,14 @@ export default function AuthPage() {
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="alex.morgan@example.com"
+                    placeholder="Enter your email"
                     className="w-full pl-9 pr-3 py-2.5 text-xs sm:text-sm bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#537993]/20"
                   />
                 </div>
               </div>
 
               <div>
-                <div className="flex justify-between items-center mb-1">
-                  <label className="block text-xs font-semibold text-slate-700">
-                    Password *
-                  </label>
-                  {authMode === 'login' && (
-                    <button
-                      type="button"
-                      onClick={() => alert('Password reset link sent to demo email!')}
-                      className="text-[11px] text-[#537993] hover:underline"
-                    >
-                      Forgot password?
-                    </button>
-                  )}
-                </div>
+               
                 <div className="relative">
                   <Lock className="w-4 h-4 text-slate-400 absolute left-3 top-3.5" />
                   <input
@@ -178,7 +165,7 @@ export default function AuthPage() {
                     required
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    placeholder="••••••••"
+                    placeholder="Enter your password"
                     className="w-full pl-9 pr-10 py-2.5 text-xs sm:text-sm bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#537993]/20"
                   />
                   <button
@@ -188,6 +175,20 @@ export default function AuthPage() {
                   >
                     {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                   </button>
+                </div>
+                 <div className="flex justify-end items-right mt-4">
+                  {/* <label className="block text-xs font-semibold text-slate-700">
+                    Password *
+                  </label> */}
+                  {authMode === 'login' && (
+                    <button
+                      type="button"
+                      onClick={() => alert('Password reset link sent to demo email!')}
+                      className="text-[11px] text-[#537993] hover:underline"
+                    >
+                      Forgot password?
+                    </button>
+                  )}
                 </div>
               </div>
 
@@ -207,13 +208,13 @@ export default function AuthPage() {
                 type="submit"
                 className="w-full py-4 px-6 rounded-xl bg-[#537993] hover:bg-[#43647b] active:bg-[#344f62] text-white font-bold text-sm transition-all shadow-md flex items-center justify-center gap-2"
               >
-                <span>{authMode === 'login' ? 'Sign In & Continue' : 'Create Account & Continue'}</span>
+                <span>{authMode === 'login' ? 'Sign In' : 'Register'}</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
             </form>
 
             {/* Quick Demo Test Logins */}
-            <div className="pt-4 border-t border-slate-100 text-center">
+            {/* <div className="pt-4 border-t border-slate-100 text-center">
               <span className="text-[11px] text-slate-400 font-bold uppercase tracking-wider block mb-2.5">
                 Quick 1-Click Demo Login
               </span>
@@ -235,7 +236,7 @@ export default function AuthPage() {
                   <span>Sarah (VIP Buyer)</span>
                 </button>
               </div>
-            </div>
+            </div> */}
           </div>
 
           {/* Footer security badge */}
@@ -250,3 +251,4 @@ export default function AuthPage() {
     </div>
   );
 }
+
