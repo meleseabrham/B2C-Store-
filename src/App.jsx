@@ -8,6 +8,8 @@ import ProductDetailPage from './components/product/ProductDetailPage';
 import CartPage from './components/cart/CartPage';
 import CheckoutPage from './components/checkout/CheckoutPage';
 import OrderConfirmationPage from './components/checkout/OrderConfirmationPage';
+import AboutPage from './components/about/AboutPage';
+import ContactPage from './components/contact/ContactPage';
 import QuickViewModal from './components/common/QuickViewModal';
 import WishlistModal from './components/common/WishlistModal';
 import ToastNotification from './components/common/ToastNotification';
@@ -30,6 +32,10 @@ export default function App() {
         return <CheckoutPage />;
       case 'order-confirmation':
         return <OrderConfirmationPage />;
+      case 'about':
+        return <AboutPage />;
+      case 'contact':
+        return <ContactPage />;
       default:
         return <HomePage />;
     }

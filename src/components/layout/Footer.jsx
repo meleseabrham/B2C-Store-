@@ -128,6 +128,16 @@ export default function Footer() {
             <h3 className="text-white font-semibold text-sm tracking-wider uppercase">Customer Care</h3>
             <ul className="space-y-2 text-sm text-slate-400">
               <li>
+                <button onClick={() => navigateTo('about')} className="hover:text-white transition-colors">
+                  About Our Brand
+                </button>
+              </li>
+              <li>
+                <button onClick={() => navigateTo('contact')} className="hover:text-white transition-colors">
+                  Contact Support
+                </button>
+              </li>
+              <li>
                 <button onClick={() => navigateTo('cart')} className="hover:text-white transition-colors">
                   Shopping Cart
                 </button>
@@ -138,17 +148,7 @@ export default function Footer() {
                 </button>
               </li>
               <li>
-                <button onClick={() => showToast('Shipping policy: Fast 2-day delivery across USA & Canada.')} className="hover:text-white transition-colors">
-                  Shipping Policy
-                </button>
-              </li>
-              <li>
-                <button onClick={() => showToast('Easy 30-day returns accepted on all unused items.')} className="hover:text-white transition-colors">
-                  Returns & Refunds
-                </button>
-              </li>
-              <li>
-                <button onClick={() => showToast('Need help? Our customer support is available 24/7.')} className="hover:text-white transition-colors">
+                <button onClick={() => navigateTo('contact')} className="hover:text-white transition-colors">
                   Help Center & FAQs
                 </button>
               </li>

@@ -163,55 +163,31 @@ export default function Navbar() {
                 )}
               </div>
 
-              {/* About Dropdown */}
-              <div 
-                className="relative"
-                onMouseEnter={() => setAboutDropdownOpen(true)}
-                onMouseLeave={() => setAboutDropdownOpen(false)}
+              {/* About Link */}
+              <button 
+                onClick={() => navigateTo('about')}
+                className={`py-1 transition-colors relative hover:text-white/80 ${
+                  currentPage === 'about' ? 'text-white font-semibold' : 'text-white/90'
+                }`}
               >
-                <button className="flex items-center gap-1 py-1 text-white/90 hover:text-white focus:outline-none">
-                  About
-                  <ChevronDown className="w-3.5 h-3.5 opacity-80" />
-                </button>
-
-                {aboutDropdownOpen && (
-                  <div className="absolute top-full left-0 w-52 bg-white text-slate-800 rounded-xl shadow-xl py-2 border border-slate-100 z-50">
-                    <button 
-                      onClick={() => {
-                        navigateTo('home');
-                        const el = document.getElementById('testimonials-section');
-                        if (el) el.scrollIntoView({ behavior: 'smooth' });
-                        setAboutDropdownOpen(false);
-                      }}
-                      className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-brand-600"
-                    >
-                      Our Story & Values
-                    </button>
-                    <button 
-                      onClick={() => {
-                        navigateTo('home');
-                        const el = document.getElementById('testimonials-section');
-                        if (el) el.scrollIntoView({ behavior: 'smooth' });
-                        setAboutDropdownOpen(false);
-                      }}
-                      className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-brand-600"
-                    >
-                      Customer Reviews
-                    </button>
-                    <button 
-                      onClick={() => {
-                        navigateTo('home');
-                        const el = document.getElementById('footer-section');
-                        if (el) el.scrollIntoView({ behavior: 'smooth' });
-                        setAboutDropdownOpen(false);
-                      }}
-                      className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-brand-600"
-                    >
-                      Contact Support
-                    </button>
-                  </div>
+                About
+                {currentPage === 'about' && (
+                  <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-white rounded-full"></span>
                 )}
-              </div>
+              </button>
+
+              {/* Contact Link */}
+              <button 
+                onClick={() => navigateTo('contact')}
+                className={`py-1 transition-colors relative hover:text-white/80 ${
+                  currentPage === 'contact' ? 'text-white font-semibold' : 'text-white/90'
+                }`}
+              >
+                Contact
+                {currentPage === 'contact' && (
+                  <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-white rounded-full"></span>
+                )}
+              </button>
             </div>
           </div>
 
@@ -391,6 +367,28 @@ export default function Navbar() {
               }`}
             >
               Shop All Products
+            </button>
+            <button
+              onClick={() => {
+                navigateTo('about');
+                setMobileMenuOpen(false);
+              }}
+              className={`text-left text-base font-semibold py-2 px-3 rounded-lg ${
+                currentPage === 'about' ? 'bg-white/20 text-white' : 'text-slate-200'
+              }`}
+            >
+              About Us
+            </button>
+            <button
+              onClick={() => {
+                navigateTo('contact');
+                setMobileMenuOpen(false);
+              }}
+              className={`text-left text-base font-semibold py-2 px-3 rounded-lg ${
+                currentPage === 'contact' ? 'bg-white/20 text-white' : 'text-slate-200'
+              }`}
+            >
+              Contact Support
             </button>
 
             <div className="pt-2 border-t border-white/10">

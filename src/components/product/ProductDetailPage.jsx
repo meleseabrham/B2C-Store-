@@ -31,6 +31,63 @@ export default function ProductDetailPage() {
   const [quantity, setQuantity] = useState(1);
   const [activeTab, setActiveTab] = useState('description');
   const [addedAnimation, setAddedAnimation] = useState(false);
+  const [showReviewModal, setShowReviewModal] = useState(false);
+  const [reviewsList, setReviewsList] = useState([
+    {
+      id: 1,
+      name: 'Jordan Miller',
+      date: '2 days ago',
+      rating: 5,
+      title: 'Exceeded all expectations',
+      comment: 'The materials and finish are extraordinary. Shipped fast and package arrived in pristine condition.',
+      verified: true
+    },
+    {
+      id: 2,
+      name: 'Claire Dupont',
+      date: '1 week ago',
+      rating: 5,
+      title: 'Remarkable daily utility',
+      comment: 'I use this daily and get compliments constantly. Super durable and well thought-out ergonomics.',
+      verified: true
+    },
+    {
+      id: 3,
+      name: 'Ethan Ross',
+      date: '3 weeks ago',
+      rating: 4,
+      title: 'Great piece, fast shipping',
+      comment: 'Very happy with the build quality. Only minor feedback is color looks slightly warmer in person, but I actually prefer it.',
+      verified: true
+    }
+  ]);
+
+  const [newReviewForm, setNewReviewForm] = useState({
+    name: '',
+    rating: 5,
+    title: '',
+    comment: ''
+  });
+
+  const handlePostReview = (e) => {
+    e.preventDefault();
+    if (newReviewForm.name && newReviewForm.comment) {
+      const added = {
+        id: Date.now(),
+        name: newReviewForm.name,
+        date: 'Just now',
+        rating: Number(newReviewForm.rating),
+        title: newReviewForm.title || 'Verified Customer Review',
+        comment: newReviewForm.comment,
+        verified: true
+      };
+      setReviewsList([added, ...reviewsList]);
+      setShowReviewModal(false);
+      setNewReviewForm({ name: '', rating: 5, title: '', comment: '' });
+      showToast('Thank you! Your verified review has been published.');
+      setActiveTab('reviews');
+    }
+  };
 
   // Related products from the same category or best sellers (excluding current item)
   const relatedProducts = PRODUCTS.filter(
@@ -377,9 +434,74 @@ export default function ProductDetailPage() {
                 <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#537993]"></span>
               )}
             </button>
+
+            <button
+              onClick={() => setActiveTab('reviews')}
+              className={`pb-4 text-sm font-bold transition-all relative ${
+                activeTab === 'reviews'
+                  ? 'text-[#537993]'
+                  : 'text-slate-400 hover:text-slate-700'
+              }`}
+            >
+              Reviews ({reviewsList.length})
+              {activeTab === 'reviews' && (
+                <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#537993]"></span>
+              )}
+            </button>
           </div>
 
           <div className="py-8 text-slate-700 text-sm leading-relaxed max-w-4xl">
+            {activeTab === 'reviews' && (
+              <div className="space-y-6">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 bg-slate-50 rounded-2xl border border-slate-200">
+                  <div className="flex items-center gap-4">
+                    <div className="text-3xl font-black text-slate-900">{product.rating}</div>
+                    <div>
+                      <div className="flex text-amber-400">
+                        {[...Array(5)].map((_, i) => (
+                          <Star key={i} className="w-4 h-4 fill-amber-400" />
+                        ))}
+                      </div>
+                      <p className="text-xs text-slate-500 mt-0.5">Based on {reviewsList.length} verified ratings</p>
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={() => setShowReviewModal(true)}
+                    className="px-5 py-2.5 bg-[#537993] hover:bg-[#43647b] text-white text-xs font-bold rounded-xl transition-all shadow-xs"
+                  >
+                    Write a Review
+                  </button>
+                </div>
+
+                <div className="space-y-4">
+                  {reviewsList.map((rev) => (
+                    <div key={rev.id} className="p-5 bg-white rounded-2xl border border-slate-200/80 shadow-2xs">
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="flex items-center gap-2">
+                          <span className="font-bold text-slate-900 text-xs sm:text-sm">{rev.name}</span>
+                          {rev.verified && (
+                            <span className="text-[10px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full flex items-center gap-1">
+                              <Check className="w-3 h-3 text-emerald-600" /> Verified Buyer
+                            </span>
+                          )}
+                        </div>
+                        <span className="text-xs text-slate-400">{rev.date}</span>
+                      </div>
+
+                      <div className="flex items-center text-amber-400 mb-1.5">
+                        {[...Array(rev.rating)].map((_, i) => (
+                          <Star key={i} className="w-3.5 h-3.5 fill-amber-400" />
+                        ))}
+                      </div>
+
+                      <h4 className="font-bold text-slate-800 text-xs sm:text-sm mb-1">{rev.title}</h4>
+                      <p className="text-xs text-slate-600 leading-relaxed">{rev.comment}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
             {activeTab === 'description' && (
               <div className="space-y-4">
                 <p>{product.description}</p>
@@ -455,6 +577,93 @@ export default function ProductDetailPage() {
         </div>
 
       </div>
+
+      {/* Write a Review Modal */}
+      {showReviewModal && (
+        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 animate-fadeIn">
+          <div className="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-slate-100">
+            <h3 className="text-xl font-bold text-slate-900 mb-1">Write a Customer Review</h3>
+            <p className="text-xs text-slate-500 mb-6">
+              Reviewing: <span className="font-semibold text-slate-800">{product.name}</span>
+            </p>
+
+            <form onSubmit={handlePostReview} className="space-y-4">
+              <div>
+                <label className="block text-xs font-semibold text-slate-700 mb-1">Overall Rating</label>
+                <div className="flex gap-2">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <button
+                      type="button"
+                      key={star}
+                      onClick={() => setNewReviewForm({ ...newReviewForm, rating: star })}
+                      className="p-1 hover:scale-110 transition-transform"
+                    >
+                      <Star
+                        className={`w-6 h-6 ${
+                          star <= newReviewForm.rating
+                            ? 'fill-amber-400 text-amber-400'
+                            : 'text-slate-300'
+                        }`}
+                      />
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-slate-700 mb-1">Your Name *</label>
+                <input
+                  type="text"
+                  required
+                  value={newReviewForm.name}
+                  onChange={(e) => setNewReviewForm({ ...newReviewForm, name: e.target.value })}
+                  placeholder="e.g. Sarah Jenkins"
+                  className="w-full px-3.5 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-slate-700 mb-1">Review Headline</label>
+                <input
+                  type="text"
+                  value={newReviewForm.title}
+                  onChange={(e) => setNewReviewForm({ ...newReviewForm, title: e.target.value })}
+                  placeholder="e.g. Best headphones I have ever owned"
+                  className="w-full px-3.5 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-slate-700 mb-1">Detailed Review *</label>
+                <textarea
+                  required
+                  rows={4}
+                  value={newReviewForm.comment}
+                  onChange={(e) => setNewReviewForm({ ...newReviewForm, comment: e.target.value })}
+                  placeholder="What did you like or dislike? How is the quality and feel?"
+                  className="w-full px-3.5 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:outline-none resize-none"
+                ></textarea>
+              </div>
+
+              <div className="pt-2 flex gap-3">
+                <button
+                  type="button"
+                  onClick={() => setShowReviewModal(false)}
+                  className="flex-1 py-2.5 rounded-xl border border-slate-200 text-xs font-semibold text-slate-600 hover:bg-slate-50"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="flex-1 py-2.5 rounded-xl bg-[#537993] hover:bg-[#43647b] text-white text-xs font-bold shadow-sm"
+                >
+                  Submit Review
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
